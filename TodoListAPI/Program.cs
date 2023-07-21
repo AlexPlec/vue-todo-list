@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TodoListAPI.Data;
+using Microsoft.AspNetCore.Identity;
+using TodoListAPI.Models;
 
 public class Startup
 {
@@ -17,12 +19,14 @@ public class Startup
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 });
+
         });
 
         services.AddControllers();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddDbContext<AppDbContext>();
+        services.AddScoped<UsersController>();
 
     }
 
@@ -40,6 +44,7 @@ public class Startup
 
         app.UseCors("AllowAnyOrigin");
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
@@ -61,5 +66,5 @@ public class Program
             .Build();
 
         host.Run();
-}
+    }
 }

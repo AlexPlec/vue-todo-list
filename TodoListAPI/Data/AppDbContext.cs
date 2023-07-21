@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using TodoListAPI.Models;
+using TodoListAPI.Models.Task;
+using TodoListAPI.Models.User;
 
 namespace TodoListAPI.Data
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<TaskModel> Tasks { get; set; }
+        public DbSet<TaskModel> Tasks { get; set; } = null!;
+        public DbSet<UserModel> Users { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -15,7 +18,18 @@ namespace TodoListAPI.Data
             modelBuilder.Entity<TaskModel>().Property(t => t.Description).IsRequired();
             modelBuilder.Entity<TaskModel>().Property(t => t.Completed).IsRequired();
 
-            // Add other configurations for your Task entity if needed
+              modelBuilder.Entity<TaskModel>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.Tasks)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserModel>().ToTable("Users");
+            modelBuilder.Entity<UserModel>().HasKey(u => u.Id);
+            modelBuilder.Entity<UserModel>().Property(u => u.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<UserModel>().Property(u => u.Login).IsRequired();
+            modelBuilder.Entity<UserModel>().Property(u => u.AutoLogin).IsRequired();
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
