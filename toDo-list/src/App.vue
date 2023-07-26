@@ -2,7 +2,7 @@
   <div class="dashboard">
     <h1 class="title">ToDo List</h1>
     <div>
-      <h1>Welcome,{{ user.login }}</h1>
+      <h1 v-if="isLoggedInOrRegistered">Welcome, {{ displayName }}</h1>
       <!-- Display other user properties as needed -->
     </div>
     <div class="content">
@@ -29,14 +29,15 @@
         <button class="btn-add-task" @click="addTaskWithUser">Add Task</button>
       </div>
     </div>
-    <div class="user authentication">
-      <button class="authenticationOpen" @click="authenticationOpen">authentication</button>
+    <div class="user-authentication">
+      <button class="authenticationOpen" @click="authenticationOpen">Log In</button>
       <div v-if="showUserModal">
         <div class="userModal">
           <input class="login" v-model="loginUser.login" placeholder="Login">
           <input class="registration" v-model="newUser.login" placeholder="Registration">
           <button class="registerAccept" @click="createUser">acceptRegister</button>
           <button class="loginAccept" @click="createLogin">AcceptLogin</button>
+          <button class="sign-up">Sign Up</button>
         </div>
       </div>
     </div>
@@ -51,19 +52,20 @@
 </template>
 
 <script>
-import { ref, computed, reactive, onMounted } from 'vue';
+import { ref, computed, reactive, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 export default {
   name: 'App',
   setup() {
-    const tasks = reactive([]); // Update ref to reactive
+    const tasks = reactive([]);
     const newTask = ref({ description: '' });
     const filter = ref('all');
     const showEditModal = ref(false);
     const showUserModal = ref(false);
     const editedTask = reactive({});
     const selectedTaskIndex = ref(null);
+    const isLoginMode = ref(true); // Set the initial mode to login
     const loginUser = reactive({
       login: '',
     });
@@ -76,6 +78,21 @@ export default {
       login: '',
       autoLogin: false,
     });
+    const displayName = computed(() => {
+      return user.login || newUser.login;
+    });
+
+    const isLoggedInOrRegistered = computed(() => {
+      return user.login !== '' || newUser.login !== '';
+    });
+
+    watch([() => user.login, () => newUser.login], () => {
+      displayName.value = user.login || newUser.login;
+    });
+
+    const toggleMode = () => {
+      isLoginMode.value = !isLoginMode.value;
+    };
 
     const fetchUser = () => {
       axios.get(`http://192.168.0.101:808/api/users/login/${loginUser.login}`)
@@ -149,7 +166,7 @@ export default {
       axios.post('http://192.168.0.101:808/api/tasks', taskData)
         .then(response => {
           console.log('Task sent successfully');
-          fetchTasks();
+          tasks.push(response.data);
           // You can optionally handle the response here
         })
         .catch(error => {
@@ -162,7 +179,6 @@ export default {
     const updateTodoList = () => {
       axios.get('http://192.168.0.101:808/api/tasks')
         .then(response => {
-
           tasks.value = response.data;
         })
         .catch(error => {
@@ -182,24 +198,30 @@ export default {
 
     const saveEditedTask = () => {
       if (selectedTaskIndex.value !== null) {
-        const taskId = tasks[selectedTaskIndex.value].id;
-        const updatedTask = {
-          Description: editedTask.text,
-          completed: tasks[selectedTaskIndex.value].completed,
-        };
+        const index = selectedTaskIndex.value;
+        if (index >= 0 && index < tasks.length) {
+          const taskId = tasks[index].id;
+          const updatedTask = {
+            Description: editedTask.text,
+            completed: tasks[index].completed,
+          };
 
-        axios.put(`http://192.168.0.101:808/api/tasks/${taskId}`, updatedTask)
-          .then(response => {
-            console.log('Task updated successfully');
-            fetchTasks(); // Update the todo list after editing the task
-            // You can optionally handle the response here
-          })
-          .catch(error => {
-            console.error('Error updating task:', error);
-          });
+          axios.put(`http://192.168.0.101:808/api/tasks/${taskId}`, updatedTask)
+            .then(response => {
+              console.log('Task updated successfully');
 
-        showEditModal.value = false;
-        selectedTaskIndex.value = null;
+              // Update the task in the 'tasks' array with the edited information
+              tasks[index].description = editedTask.text;
+
+              showEditModal.value = false;
+              selectedTaskIndex.value = null;
+            })
+            .catch(error => {
+              console.error('Error updating task:', error);
+            });
+        } else {
+          console.error('Invalid task index');
+        }
       }
     };
 
@@ -229,7 +251,7 @@ export default {
           console.error('Error removing task:', error);
         });
 
-      tasks.value.splice(index, 1);
+      tasks.splice(index, 1);
     };
 
     const setFilter = filterValue => {
@@ -270,6 +292,14 @@ export default {
         });
     };
 
+    // Fetch the user data on component mount
+    onMounted(() => {
+      updateTodoList();
+    });
+
+    // Computed property to determine if the user is logged in or registered
+
+
     return {
       tasks,
       newTask,
@@ -293,10 +323,15 @@ export default {
       user,
       loginUser,
       createLogin,
+      isLoggedInOrRegistered, // Add the computed property
+      displayName,
+      isLoginMode,
+      toggleMode,
     };
   },
 };
 </script>
+
 
 <style>
 body {
@@ -368,6 +403,8 @@ body {
 
 .userModal {
   position: fixed;
+  width: 300px;
+  height: 600px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -487,5 +524,28 @@ body {
 .task-list::-webkit-scrollbar-thumb:hover {
   background-color: #555;
   /* Set the color of the scrollbar thumb on hover */
+}
+
+.user-authentication {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.sign-up {
+  position: absolute;
+  left: 40%;
+  bottom: 5%;
+}
+
+.login {
+  position: absolute;
+  bottom: 25%;
+}
+
+.loginAccept {
+  position: absolute;
+  left: 40%;
+  bottom: 15%;
 }
 </style>
