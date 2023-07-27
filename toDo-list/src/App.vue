@@ -33,11 +33,16 @@
       <button class="authenticationOpen" @click="authenticationOpen">Log In</button>
       <div v-if="showUserModal">
         <div class="userModal">
-          <input class="login" v-model="loginUser.login" placeholder="Login">
-          <input class="registration" v-model="newUser.login" placeholder="Registration">
-          <button class="registerAccept" @click="createUser">acceptRegister</button>
-          <button class="loginAccept" @click="createLogin">AcceptLogin</button>
-          <button class="sign-up">Sign Up</button>
+          <div class="loginArea" v-show="showSignUp">
+            <input class="login" v-model="loginUser.login" placeholder="Login">
+            <button class="loginAccept" @click="createLogin">AcceptLogin</button>
+          <button class="sign-up" @click="toggleSignUp">Sign Up</button>
+          </div>
+          <div class="registerArea" v-show="showLogIn">
+            <input class="registration" v-model="newUser.login" placeholder="Registration">
+            <button class="registerAccept" @click="createUser">acceptRegister</button>
+            <button class="log-in" @click="toggleSignUp">Log In</button>
+          </div>
         </div>
       </div>
     </div>
@@ -66,6 +71,8 @@ export default {
     const editedTask = reactive({});
     const selectedTaskIndex = ref(null);
     const isLoginMode = ref(true); // Set the initial mode to login
+    const showSignUp = ref(true);
+    const showLogIn = ref(false);
     const loginUser = reactive({
       login: '',
     });
@@ -92,6 +99,11 @@ export default {
 
     const toggleMode = () => {
       isLoginMode.value = !isLoginMode.value;
+    };
+
+    const toggleSignUp = () => {
+      showSignUp.value = !showSignUp.value;
+      showLogIn.value = !showLogIn.value;
     };
 
     const fetchUser = () => {
@@ -327,6 +339,9 @@ export default {
       displayName,
       isLoginMode,
       toggleMode,
+      showSignUp,
+      showLogIn,
+      toggleSignUp,
     };
   },
 };
@@ -544,6 +559,22 @@ body {
 }
 
 .loginAccept {
+  position: absolute;
+  left: 40%;
+  bottom: 15%;
+}
+
+.log-in {
+  position: absolute;
+  left: 40%;
+  bottom: 5%;
+}
+
+.registration {
+  position: absolute;
+  bottom: 25%;
+}
+.registerAccept {
   position: absolute;
   left: 40%;
   bottom: 15%;
