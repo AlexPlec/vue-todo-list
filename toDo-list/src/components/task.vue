@@ -1,8 +1,17 @@
 <template>
     <div class="task">
-        <span class="task-text" @click="functions.toggleTaskCompletion(index, tasks)">{{ task.description }}</span>
-        <button class="btn-task" @click="functions.editTask(index)">Edit</button>
-        <button class="btn-task" @click="functions.removeTask(index)">Remove</button>
+        <span class="task-text" @click="functions.toggleTaskCompletion(variables.index,
+            variables.tasks
+        )">{{ variables.task.description }}</span>
+        <button class="btn-task" @click="functions.editTask(variables.index,
+            variables.selectedTaskIndex,
+            variables.tasks,
+            variables.editedTask,
+            variables.showEditModal)
+            ">Edit</button>
+        <button class="btn-task" @click="functions.removeTask(variables.index,
+            variables.tasks
+        )">Remove</button>
     </div>
 </template>
 
@@ -12,20 +21,12 @@ export default {
     props: {
         functions: {
             type: Object,
-            required: true,
+            required: true
         },
-        task: {
+        variables: {
             type: Object,
-            required: true,
-        },
-        index: {
-            type: Number,
-            required: true,
-        },
-        tasks: {
-            type:Array,
-            required: true,
+            required: true
         }
-    },
+    }
 };
 </script>

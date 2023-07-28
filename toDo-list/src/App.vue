@@ -14,11 +14,18 @@
       <div class="task-list-content">
         <ul class="task-list">
           <li v-for="(task, index) in taskClass.filteredTasks" :key="index" :class="{ completed: task.completed }">
-            <TaskTemplate
-              :functions="{ toggleTaskCompletion: taskClass.toggleTaskCompletion, editTask: taskClass.editTask, removeTask: taskClass.removeTask }"
-              :task="task"
-              :index="index"
-              :tasks="variablesClass.tasks">
+            <TaskTemplate :functions="{
+              toggleTaskCompletion: taskClass.toggleTaskCompletion,
+              editTask: taskClass.editTask,
+              removeTask: taskClass.removeTask
+            }" :variables="{
+  task: task,
+  index: index,
+  tasks: variablesClass.tasks,
+  selectedTaskIndex: variablesClass.selectedTaskIndex,
+  editedTask: variablesClass.editedTask,
+  showEditModal: variablesClass.showEditModal
+}">
             </TaskTemplate>
           </li>
         </ul>
@@ -46,11 +53,16 @@
       </div>
     </div>
     <div v-if="variablesClass.showEditModal.value">
-      <div class="modal">
-        <input class="task-input" v-model="variablesClass.editedTask.text">
-        <button class="btn-modal" @click="taskClass.saveEditedTask">Save</button>
-        <button class="btn-modal" @click="taskClass.cancelEditTask">Cancel</button>
-      </div>
+      <TaskModal :functions="{
+        saveEditedTask: taskClass.saveEditedTask,
+        cancelEditTask: taskClass.cancelEditTask
+      }" :variables="{
+  editedTask: variablesClass.editedTask,
+  showEditModal: variablesClass.showEditModal,
+  selectedTaskIndex: variablesClass.selectedTaskIndex,
+  tasks: variablesClass.tasks
+}">
+      </TaskModal>
     </div>
   </div>
 </template>
@@ -91,7 +103,7 @@ export default {
     return {
       taskClass,
       userClass,
-      variablesClass,
+      variablesClass
     };
   },
 };

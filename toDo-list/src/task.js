@@ -19,19 +19,18 @@ class Task {
         this.filter = filter;
     }
 
-    editTask(index) {
-        this.selectedTaskIndex.value = index;
-        this.editedTask.text = this.tasks[index].description;
-        this.showEditModal.value = true;
+    editTask(index, selectedTaskIndex,tasks,editedTask,showEditModal) {
+        selectedTaskIndex.value = index;
+        editedTask.text = tasks[index].description;
+        showEditModal.value = true;
     }
 
     toggleTaskCompletion(index, tasks) {
-        // this.tasks[index].completed = !this.tasks[index].completed;
         tasks[index].completed = !tasks[index].completed;
     }
 
-    removeTask(index) {
-        const taskId = this.tasks.value[index].id;
+    removeTask(index,tasks) {
+        const taskId = tasks.value[index].id;
 
         axios
             .delete(`http://192.168.0.101:808/api/tasks/${taskId}`)
@@ -42,23 +41,23 @@ class Task {
                 console.error('Error removing task:', error);
             });
 
-        this.tasks.splice(index, 1);
+        tasks.splice(index, 1);
     }
 
-    cancelEditTask() {
-        this.editedTask.text = '';
-        this.showEditModal.value = false;
-        this.selectedTaskIndex.value = null;
+    cancelEditTask(editedTask,showEditModal,selectedTaskIndex) {
+        editedTask.text = '';
+        showEditModal.value = false;
+        selectedTaskIndex.value = null;
     }
 
-    saveEditedTask() {
-        if (this.selectedTaskIndex.value !== null) {
-            const index = this.selectedTaskIndex.value;
-            if (index >= 0 && index < this.tasks.length) {
-                const taskId = this.tasks[index].id;
+    saveEditedTask(selectedTaskIndex,tasks,editedTask,showEditModal) {
+        if (selectedTaskIndex.value !== null) {
+            const index = selectedTaskIndex.value;
+            if (index >= 0 && index < tasks.length) {
+                const taskId = tasks[index].id;
                 const updatedTask = {
-                    Description: this.editedTask.text,
-                    completed: this.tasks[index].completed,
+                    Description: editedTask.text,
+                    completed: tasks[index].completed,
                 };
 
                 axios
@@ -70,10 +69,10 @@ class Task {
                         console.log('Task updated successfully');
 
                         // Update the task in the 'tasks' array with the edited information
-                        this.tasks[index].description = this.editedTask.text;
+                        tasks[index].description = editedTask.text;
 
-                        this.showEditModal.value = false;
-                        this.selectedTaskIndex.value = null;
+                        showEditModal.value = false;
+                        selectedTaskIndex.value = null;
                     })
                     .catch((error) => {
                         console.error('Error updating task:', error);

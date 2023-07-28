@@ -54,7 +54,7 @@ body {
   font-weight: bold;
 }
 
-.modal {
+.taskModal {
   position: fixed;
   top: 50%;
   left: 50%;
