@@ -2,6 +2,7 @@
   <div class="dashboard">
     <h1 class="title">ToDo List</h1>
     <div class="content">
+
       <div class="btns-filter">
         <button class="btns" @click="taskClass.setFilter('all')"
           :class="{ 'active-filter': filter === 'all' }">All</button>
@@ -13,11 +14,12 @@
       <div class="task-list-content">
         <ul class="task-list">
           <li v-for="(task, index) in taskClass.filteredTasks" :key="index" :class="{ completed: task.completed }">
-            <div class="task">
-              <span class="task-text" @click="taskClass.toggleTaskCompletion(index)">{{ task.description }}</span>
-              <button class="btn-task" @click="taskClass.editTask(index)">Edit</button>
-              <button class="btn-task" @click="taskClass.removeTask(index)">Remove</button>
-            </div>
+            <TaskTemplate
+              :functions="{ toggleTaskCompletion: taskClass.toggleTaskCompletion, editTask: taskClass.editTask, removeTask: taskClass.removeTask }"
+              :task="task"
+              :index="index"
+              :tasks="variablesClass.tasks">
+            </TaskTemplate>
           </li>
         </ul>
       </div>

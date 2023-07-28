@@ -25,8 +25,9 @@ class Task {
         this.showEditModal.value = true;
     }
 
-    toggleTaskCompletion(index) {
-        this.tasks[index].completed = !this.tasks[index].completed;
+    toggleTaskCompletion(index, tasks) {
+        // this.tasks[index].completed = !this.tasks[index].completed;
+        tasks[index].completed = !tasks[index].completed;
     }
 
     removeTask(index) {
