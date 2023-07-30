@@ -19,18 +19,19 @@ class Task {
         this.filter = filter;
     }
 
-    editTask(index, selectedTaskIndex,tasks,editedTask,showEditModal) {
-        selectedTaskIndex.value = index;
-        editedTask.text = tasks[index].description;
-        showEditModal.value = true;
+    editTask(variables) {
+        variables.selectedTaskIndex.value = variables.index;
+        variables.editedTask.text =
+            variables.tasks[variables.index].description;
+        variables.showEditModal.value = true;
     }
 
     toggleTaskCompletion(index, tasks) {
         tasks[index].completed = !tasks[index].completed;
     }
 
-    removeTask(index,tasks) {
-        const taskId = tasks.value[index].id;
+    removeTask(variables) {
+        const taskId = variables.tasks.value[variables.index].id;
 
         axios
             .delete(`http://192.168.0.101:808/api/tasks/${taskId}`)
@@ -41,23 +42,23 @@ class Task {
                 console.error('Error removing task:', error);
             });
 
-        tasks.splice(index, 1);
+        variables.tasks.splice(variables.index, 1);
     }
 
-    cancelEditTask(editedTask,showEditModal,selectedTaskIndex) {
-        editedTask.text = '';
-        showEditModal.value = false;
-        selectedTaskIndex.value = null;
+    cancelEditTask(variables) {
+        variables.editedTask.text = '';
+        variables.showEditModal.value = false;
+        variables.selectedTaskIndex.value = null;
     }
 
-    saveEditedTask(selectedTaskIndex,tasks,editedTask,showEditModal) {
-        if (selectedTaskIndex.value !== null) {
-            const index = selectedTaskIndex.value;
-            if (index >= 0 && index < tasks.length) {
-                const taskId = tasks[index].id;
+    saveEditedTask(variables) {
+        if (variables.selectedTaskIndex.value !== null) {
+            const index = variables.selectedTaskIndex.value;
+            if (index >= 0 && index < variables.tasks.length) {
+                const taskId = variables.tasks[index].id;
                 const updatedTask = {
-                    Description: editedTask.text,
-                    completed: tasks[index].completed,
+                    Description: variables.editedTask.text,
+                    completed: variables.tasks[index].completed,
                 };
 
                 axios
@@ -69,10 +70,11 @@ class Task {
                         console.log('Task updated successfully');
 
                         // Update the task in the 'tasks' array with the edited information
-                        tasks[index].description = editedTask.text;
+                        variables.tasks[index].description =
+                            variables.editedTask.text;
 
-                        showEditModal.value = false;
-                        selectedTaskIndex.value = null;
+                        variables.showEditModal.value = false;
+                        variables.selectedTaskIndex.value = null;
                     })
                     .catch((error) => {
                         console.error('Error updating task:', error);
@@ -83,29 +85,29 @@ class Task {
         }
     }
 
-    addTaskWithUser() {
-        if (this.newTask.value.description.trim() === '') {
+    addTaskWithUser(variables) {
+        if (variables.newTask.value.description.trim() === '') {
             return;
         }
 
         const taskData = {
-            Description: this.newTask.value.description,
+            Description: variables.newTask.value.description,
             Completed: false,
-            UserId: this.user.id, // Include the user ID in the task object
+            UserId: variables.user.id, // Include the user ID in the task object
         };
 
         axios
             .post('http://192.168.0.101:808/api/tasks', taskData)
             .then((response) => {
                 console.log('Task sent successfully');
-                this.tasks.push(response.data);
+                variables.tasks.push(response.data);
                 // You can optionally handle the response here
             })
             .catch((error) => {
                 console.error('Error sending task:', error);
             });
 
-        this.newTask.value.description = ''; // Clear the input field
+            variables.newTask.value.description = ''; // Clear the input field
     }
 
     updateTodoList() {
@@ -132,8 +134,6 @@ class Task {
             return this.tasks;
         }
     }
-
-    // Other methods
 }
 
 export default Task;

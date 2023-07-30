@@ -2,7 +2,6 @@
   <div class="dashboard">
     <h1 class="title">ToDo List</h1>
     <div class="content">
-
       <div class="btns-filter">
         <button class="btns" @click="taskClass.setFilter('all')"
           :class="{ 'active-filter': filter === 'all' }">All</button>
@@ -32,11 +31,22 @@
       </div>
       <div class="new-task">
         <input class="new-task-input" v-model="variablesClass.newTask.value.description" placeholder="Enter a new task">
-        <button class="btn-add-task" @click="taskClass.addTaskWithUser">Add Task</button>
+        <Button
+        :function="taskClass.addTaskWithUser"
+        :variables="{newTask:variablesClass.newTask,
+          user:variablesClass.user,
+          tasks:variablesClass.tasks
+        }"
+        >Add Task</Button>
       </div>
     </div>
     <div class="user-authentication">
-      <button class="authenticationOpen" @click="userClass.authenticationOpen">Log In</button>
+      <Button
+      :function="userClass.authenticationOpen"
+      :variables="{
+        showUserModal: variablesClass.showUserModal
+      }"
+      >Log In</Button>
       <div v-if="variablesClass.showUserModal.value">
         <div class="userModal">
           <div class="loginArea" v-show="variablesClass.showSignUp.value">
@@ -63,6 +73,7 @@
   tasks: variablesClass.tasks
 }">
       </TaskModal>
+
     </div>
   </div>
 </template>

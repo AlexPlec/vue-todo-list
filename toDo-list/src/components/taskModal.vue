@@ -1,17 +1,17 @@
 <template>
     <div class="taskModal">
         <input class="task-input" v-model="variables.editedTask.text">
-        <button class="btn-modal" @click="functions.saveEditedTask(
-            variables.selectedTaskIndex,
-            variables.tasks,
-            variables.editedTask,
-            variables.showEditModal
-        )">Save</button>
-        <button class="btn-modal" @click="functions.cancelEditTask(
-            variables.editedTask,
-            variables.showEditModal,
-            variables.selectedTaskIndex)
-            ">Cancel</button>
+        <Button :function="functions.saveEditedTask" :variables="{
+            selectedTaskIndex: variables.selectedTaskIndex,
+            tasks: variables.tasks,
+            editedTask: variables.editedTask,
+            showEditModal: variables.showEditModal
+        }">Save</Button>
+        <Button :function="functions.cancelEditTask" :variables="{
+            editedTask: variables.editedTask,
+            showEditModal: variables.showEditModal,
+            selectedTaskIndex: variables.selectedTaskIndex
+        }">Cancel</Button>
     </div>
 </template>
 

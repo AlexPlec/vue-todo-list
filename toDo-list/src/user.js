@@ -95,8 +95,8 @@ class User {
                 console.error('Error creating user:', error);
             });
     }
-    authenticationOpen() {
-        this.showUserModal.value = !this.showUserModal.value;
+    authenticationOpen(variables) {
+        variables.showUserModal.value = !variables.showUserModal.value;
     }
 
     toggleSignUp() {

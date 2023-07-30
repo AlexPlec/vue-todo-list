@@ -3,15 +3,17 @@
         <span class="task-text" @click="functions.toggleTaskCompletion(variables.index,
             variables.tasks
         )">{{ variables.task.description }}</span>
-        <button class="btn-task" @click="functions.editTask(variables.index,
-            variables.selectedTaskIndex,
-            variables.tasks,
-            variables.editedTask,
-            variables.showEditModal)
-            ">Edit</button>
-        <button class="btn-task" @click="functions.removeTask(variables.index,
-            variables.tasks
-        )">Remove</button>
+        <Button :function="functions.editTask" :variables="{
+            index: variables.index,
+            selectedTaskIndex: variables.selectedTaskIndex,
+            tasks: variables.tasks,
+            editedTask: variables.editedTask,
+            showEditModal: variables.showEditModal
+        }">Edit</Button>
+        <Button :function="functions.removeTask" :variables="{
+            index: variables.index,
+            tasks: variables.tasks
+        }">Remove</Button>
     </div>
 </template>
 
