@@ -3,6 +3,7 @@ import TaskModal from './components/taskModal.vue'
 import Button from './components/button.vue'
 import UserModal from './components/userModal.vue'
 import FilterButton from './components/filterButton.vue'
+import Input from './components/input.vue'
 
 
 export default
@@ -12,5 +13,6 @@ export default
     TaskModal,
     Button,
     UserModal,
-    FilterButton
+    FilterButton,
+    Input
 ];

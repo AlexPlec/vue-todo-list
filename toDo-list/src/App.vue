@@ -36,7 +36,10 @@
         </ul>
       </div>
       <div class="new-task">
-        <input class="new-task-input" v-model="variablesClass.newTask.value.description" placeholder="Enter a new task">
+        <Input v-model="variablesClass.newTask.value.description" :variables="{
+          description: variablesClass.newTask.value.description,
+          text: 'Enter a new task'
+        }" />
         <Button :function="taskClass.addTaskWithUser" :variables="{
           newTask: variablesClass.newTask,
           user: variablesClass.user,

@@ -1,6 +1,9 @@
 <template>
     <div class="taskModal">
-        <input class="task-input" v-model="variables.editedTask.text">
+        <!-- <input class="task-input" v-model="variables.editedTask.text"> -->
+        <Input :variables="{
+            description: variables.editedTask.text
+          }" />
         <Button :function="functions.saveEditedTask" :variables="{
             selectedTaskIndex: variables.selectedTaskIndex,
             tasks: variables.tasks,

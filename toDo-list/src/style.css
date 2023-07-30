@@ -229,3 +229,7 @@ body {
   left: 40%;
   bottom: 15%;
 }
+
+input::placeholder {
+  color: #999;
+}
