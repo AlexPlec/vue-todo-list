@@ -3,12 +3,18 @@
     <h1 class="title">ToDo List</h1>
     <div class="content">
       <div class="btns-filter">
-        <button class="btns" @click="taskClass.setFilter('all')"
-          :class="{ 'active-filter': filter === 'all' }">All</button>
-        <button class="btns" @click="taskClass.setFilter('active')"
-          :class="{ 'active-filter': filter === 'active' }">Active</button>
-        <button class="btns" @click="taskClass.setFilter('completed')"
-          :class="{ 'active-filter': filter === 'completed' }">Completed</button>
+        <Button :function="taskClass.setFilter" :variables="{
+          filter: variablesClass.filter,
+          filterValue: 'all'
+        }">All</Button>
+        <Button :function="taskClass.setFilter" :variables="{
+          filter: variablesClass.filter,
+          filterValue: 'active'
+        }">Active</Button>
+        <Button :function="taskClass.setFilter" :variables="{
+          filter: variablesClass.filter,
+          filterValue: 'completed'
+        }">Completed</Button>
       </div>
       <div class="task-list-content">
         <ul class="task-list">
@@ -31,35 +37,32 @@
       </div>
       <div class="new-task">
         <input class="new-task-input" v-model="variablesClass.newTask.value.description" placeholder="Enter a new task">
-        <Button
-        :function="taskClass.addTaskWithUser"
-        :variables="{newTask:variablesClass.newTask,
-          user:variablesClass.user,
-          tasks:variablesClass.tasks
-        }"
-        >Add Task</Button>
+        <Button :function="taskClass.addTaskWithUser" :variables="{
+          newTask: variablesClass.newTask,
+          user: variablesClass.user,
+          tasks: variablesClass.tasks
+        }">Add Task</Button>
       </div>
     </div>
     <div class="user-authentication">
-      <Button
-      :function="userClass.authenticationOpen"
-      :variables="{
+      <Button :function="userClass.authenticationOpen" :variables="{
         showUserModal: variablesClass.showUserModal
-      }"
-      >Log In</Button>
+      }">Log In</Button>
       <div v-if="variablesClass.showUserModal.value">
-        <div class="userModal">
-          <div class="loginArea" v-show="variablesClass.showSignUp.value">
-            <input class="loginInput" v-model="variablesClass.loginUser.login" placeholder="Login">
-            <button class="loginAccept" @click="userClass.createUserLogin">AcceptLogin</button>
-            <button class="sign-up" @click="userClass.toggleSignUp">Sign Up</button>
-          </div>
-          <div class="registerArea" v-show="variablesClass.showLogIn.value">
-            <input class="registrationInput" v-model="variablesClass.newUser.login" placeholder="Registration">
-            <button class="registerAccept" @click="userClass.createUser">acceptRegister</button>
-            <button class="log-in" @click="userClass.toggleSignUp">Log In</button>
-          </div>
-        </div>
+        <UserModal :functions="{
+          createUserLogin: userClass.createUserLogin,
+          toggleSignUp: userClass.toggleSignUp,
+          createUser: userClass.createUser
+        }" :variables="{
+  loginUser: variablesClass.loginUser,
+  user: variablesClass.user,
+  tasks: variablesClass.tasks,
+  showUserModal: variablesClass.showUserModal,
+  showSignUp: variablesClass.showSignUp,
+  showLogIn: variablesClass.showLogIn,
+  newUser: variablesClass.newUser
+
+}"></UserModal>
       </div>
     </div>
     <div v-if="variablesClass.showEditModal.value">
@@ -97,18 +100,10 @@ export default {
       variablesClass.user,
       variablesClass.filter
     );
-    const userClass = new User(
-      variablesClass.loginUser,
-      variablesClass.user,
-      variablesClass.tasks,
-      variablesClass.showUserModal,
-      variablesClass.newUser,
-      variablesClass.showSignUp,
-      variablesClass.showLogIn
-    );
+    const userClass = new User();
 
     onMounted(() => {
-      taskClass.updateTodoList();
+      taskClass.updateTodoList(variablesClass.tasks);
     });
 
     return {

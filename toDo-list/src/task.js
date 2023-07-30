@@ -110,19 +110,19 @@ class Task {
             variables.newTask.value.description = ''; // Clear the input field
     }
 
-    updateTodoList() {
+    updateTodoList(tasks) {
         axios
             .get('http://192.168.0.101:808/api/tasks')
             .then((response) => {
-                this.tasks.value = response.data;
+                tasks.value = response.data;
             })
             .catch((error) => {
                 console.error('Error fetching tasks:', error);
             });
     }
 
-    setFilter(filterValue) {
-        this.filter.value = filterValue;
+    setFilter(variables) {
+        variables.filter.value = variables.filterValue;
     }
 
     get filteredTasks() {
