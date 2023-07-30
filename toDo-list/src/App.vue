@@ -95,12 +95,7 @@ export default {
   setup() {
     const variablesClass = new Variables();
     const taskClass = new Task(
-      variablesClass.selectedTaskIndex,
-      variablesClass.editedTask,
-      variablesClass.showEditModal,
       variablesClass.tasks,
-      variablesClass.newTask,
-      variablesClass.user,
       variablesClass.filter
     );
     const userClass = new User();

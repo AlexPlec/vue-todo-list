@@ -2,7 +2,6 @@ import axios from 'axios';
 
 class User {
     createUserLogin(variables) {
-        console.log(variables);
         if (variables.loginUser.login.trim() === '') {
             return;
         }

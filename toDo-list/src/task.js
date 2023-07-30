@@ -1,21 +1,8 @@
 import axios from 'axios';
 
 class Task {
-    constructor(
-        selectedTaskIndex,
-        editedTask,
-        showEditModal,
-        tasks,
-        newTask,
-        user,
-        filter
-    ) {
-        this.selectedTaskIndex = selectedTaskIndex;
-        this.editedTask = editedTask;
-        this.showEditModal = showEditModal;
+    constructor(tasks, filter) {
         this.tasks = tasks;
-        this.newTask = newTask;
-        this.user = user;
         this.filter = filter;
     }
 
@@ -107,7 +94,7 @@ class Task {
                 console.error('Error sending task:', error);
             });
 
-            variables.newTask.value.description = ''; // Clear the input field
+        variables.newTask.value.description = ''; // Clear the input field
     }
 
     updateTodoList(tasks) {
