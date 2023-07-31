@@ -2,39 +2,21 @@
   <div class="dashboard">
     <h1 class="title">ToDo List</h1>
     <div class="content">
-      <div class="btns-filter">
-        <Button :function="taskClass.setFilter" :variables="{
-          filter: variablesClass.filter,
-          filterValue: 'all'
-        }">All</Button>
-        <Button :function="taskClass.setFilter" :variables="{
-          filter: variablesClass.filter,
-          filterValue: 'active'
-        }">Active</Button>
-        <Button :function="taskClass.setFilter" :variables="{
-          filter: variablesClass.filter,
-          filterValue: 'completed'
-        }">Completed</Button>
-      </div>
-      <div class="task-list-content">
-        <ul class="task-list">
-          <li v-for="(task, index) in taskClass.filteredTasks" :key="index" :class="{ completed: task.completed }">
-            <TaskTemplate :functions="{
-              toggleTaskCompletion: taskClass.toggleTaskCompletion,
-              editTask: taskClass.editTask,
-              removeTask: taskClass.removeTask
-            }" :variables="{
-  task: task,
-  index: index,
+      <ButtonFilter :functions="{ setFilter: taskClass.setFilter }" :variables="{
+        filter: variablesClass.filter
+      }"></ButtonFilter>
+      <TaskListContent :functions="{
+        filteredTasks: taskClass.filteredTasks,
+        toggleTaskCompletion: taskClass.toggleTaskCompletion,
+        editTask: taskClass.editTask,
+        removeTask: taskClass.removeTask
+      }" :variables="{
   tasks: variablesClass.tasks,
   selectedTaskIndex: variablesClass.selectedTaskIndex,
   editedTask: variablesClass.editedTask,
   showEditModal: variablesClass.showEditModal
-}">
-            </TaskTemplate>
-          </li>
-        </ul>
-      </div>
+
+}"></TaskListContent>
       <div class="new-task">
         <Input v-model="variablesClass.newTask.value.description" :variables="{
           description: variablesClass.newTask.value.description,
