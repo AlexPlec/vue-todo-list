@@ -1,19 +1,13 @@
 <template>
     <div class="taskModal">
-        <!-- <input class="task-input" v-model="variables.editedTask.text"> -->
-        <Input :variables="{
-            description: variables.editedTask.text
-          }" />
-        <Button :function="functions.saveEditedTask" :variables="{
-            selectedTaskIndex: variables.selectedTaskIndex,
-            tasks: variables.tasks,
-            editedTask: variables.editedTask,
-            showEditModal: variables.showEditModal
+        <Input v-model="componentVariables.variables.editedTask.text" :variables="{
+            description: componentVariables.variables.editedTask.text
+        }" />
+        <Button :function="componentFunctions.functions.saveEditedTask" :componentVariables="{
+            variables: componentVariables.variables,
         }">Save</Button>
-        <Button :function="functions.cancelEditTask" :variables="{
-            editedTask: variables.editedTask,
-            showEditModal: variables.showEditModal,
-            selectedTaskIndex: variables.selectedTaskIndex
+        <Button :function="componentFunctions.functions.cancelEditTask" :componentVariables="{
+            variables: componentVariables.variables,
         }">Cancel</Button>
     </div>
 </template>
@@ -22,11 +16,11 @@
 export default {
     name: 'TaskModal',
     props: {
-        functions: {
+        componentFunctions: {
             type: Object,
             required: true
         },
-        variables: {
+        componentVariables: {
             type: Object,
             required: true
         }

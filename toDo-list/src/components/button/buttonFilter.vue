@@ -1,36 +1,34 @@
 <template>
     <div class="buttonFilter">
-        <Button :function="functions.setFilter" :variables="{
-            filter: variables.filter,
+        <Button :function="componentFunctions.functions.setFilter" :componentVariables="{
+            variables: componentVariables.variables,
             filterValue: 'all'
-          }">All</Button>
-          <Button :function="functions.setFilter" :variables="{
-            filter: variables.filter,
+        }">All</Button>
+        <Button :function="componentFunctions.functions.setFilter" :componentVariables="{
+            variables: componentVariables.variables,
             filterValue: 'active'
-          }">Active</Button>
-          <Button :function="functions.setFilter" :variables="{
-            filter: variables.filter,
+        }">Active</Button>
+        <Button :function="componentFunctions.functions.setFilter" :componentVariables="{
+            variables: componentVariables.variables,
             filterValue: 'completed'
-          }">Completed</Button>
+        }">Completed</Button>
     </div>
 </template>
 
 <script>
-    export default {
-        name:"ButtonFilter",
-        props: {
-            functions: {
+export default {
+    name: "ButtonFilter",
+    props: {
+        componentFunctions: {
             type: Object,
             required: true
         },
-        variables: {
+        componentVariables: {
             type: Object,
             required: true
         }
-        }
     }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

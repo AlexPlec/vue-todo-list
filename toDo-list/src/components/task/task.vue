@@ -1,18 +1,13 @@
 <template>
     <div class="task">
-        <span class="task-text" @click="functions.toggleTaskCompletion(variables.index,
-            variables.tasks
-        )">{{ variables.task.description }}</span>
-        <Button :function="functions.editTask" :variables="{
-            index: variables.index,
-            selectedTaskIndex: variables.selectedTaskIndex,
-            tasks: variables.tasks,
-            editedTask: variables.editedTask,
-            showEditModal: variables.showEditModal
+        <span class="task-text" @click="componentFunctions.functions.toggleTaskCompletion(componentVariables.index,
+            componentVariables.variables.tasks
+        )">{{ componentVariables.task.description }}</span>
+        <Button :function="componentFunctions.functions.editTask" :componentVariables="{
+            variables: componentVariables
         }">Edit</Button>
-        <Button :function="functions.removeTask" :variables="{
-            index: variables.index,
-            tasks: variables.tasks
+        <Button :function="componentFunctions.functions.removeTask" :componentVariables="{
+            variables: componentVariables
         }">Remove</Button>
     </div>
 </template>
@@ -21,11 +16,11 @@
 export default {
     name: "TaskTemplate",
     props: {
-        functions: {
+        componentFunctions: {
             type: Object,
             required: true
         },
-        variables: {
+        componentVariables: {
             type: Object,
             required: true
         }

@@ -1,34 +1,27 @@
 <template>
     <div class="userModal">
-        <div class="loginArea" v-show="variables.showSignUp.value">
-            <Input v-model="variables.loginUser.login" :variables="{
-                description: variables.loginUser.login,
+        <div class="loginArea" v-show="componentVariables.variables.showSignUp.value">
+            <Input v-model="componentVariables.variables.loginUser.login" :variables="{
+                description: componentVariables.variables.loginUser.login,
                 text: 'Login'
             }" />
-            <Button :function="functions.createUserLogin" :variables="{
-                loginUser: variables.loginUser,
-                user: variables.user,
-                tasks: variables.tasks,
-                showUserModal: variables.showUserModal,
+            <Button :function="componentFunctions.functions.createUserLogin" :componentVariables="{
+                variables: componentVariables.variables,
             }">AcceptLogin</Button>
-            <Button :function="functions.toggleSignUp" :variables="{
-                showSignUp: variables.showSignUp,
-                showLogIn: variables.showLogIn
+            <Button :function="componentFunctions.functions.toggleSignUp" :componentVariables="{
+                variables: componentVariables.variables,
             }">Sign Up</Button>
         </div>
-        <div class="registerArea" v-show="variables.showLogIn.value">
-            <Input v-model="variables.newUser.login" :variables="{
-                description: variables.newUser.login,
+        <div class="registerArea" v-show="componentVariables.variables.showLogIn.value">
+            <Input v-model="componentVariables.variables.newUser.login" :variables="{
+                description: componentVariables.variables.newUser.login,
                 text: 'Registration'
             }" />
-            <Button :function="functions.createUser" :variables="{
-                newUser: variables.newUser,
-                showUserModal: variables.showUserModal,
-                user: variables.user
+            <Button :function="componentFunctions.functions.createUser" :componentVariables="{
+                variables: componentVariables.variables,
             }">acceptRegister</Button>
-            <Button :function="functions.toggleSignUp" :variables="{
-                showSignUp: variables.showSignUp,
-                showLogIn: variables.showLogIn
+            <Button :function="componentFunctions.functions.toggleSignUp" :componentVariables="{
+                variables: componentVariables.variables,
             }">Log In</Button>
         </div>
     </div>
@@ -38,11 +31,11 @@
 export default {
     name: "UserModal",
     props: {
-        functions: {
+        componentFunctions: {
             type: Object,
             required: true
         },
-        variables: {
+        componentVariables: {
             type: Object,
             required: true
         }

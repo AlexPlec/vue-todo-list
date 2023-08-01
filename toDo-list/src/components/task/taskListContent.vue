@@ -1,19 +1,13 @@
 <template>
     <div class="task-list-content">
         <ul class="task-list">
-            <li v-for="(task, index) in functions.filteredTasks" :key="index" :class="{ completed: task.completed }">
-                <TaskTemplate :functions="{
-                    toggleTaskCompletion: functions.toggleTaskCompletion,
-                    editTask: functions.editTask,
-                    removeTask: functions.removeTask
-                }" :variables="{
-    task: task,
-    index: index,
-    tasks: variables.tasks,
-    selectedTaskIndex: variables.selectedTaskIndex,
-    editedTask: variables.editedTask,
-    showEditModal: variables.showEditModal
-}">
+            <li v-for="(task, index) in componentFunctions.functions.filteredTasks" :key="index"
+                :class="{ completed: task.completed }">
+                <TaskTemplate :componentFunctions="{ functions: componentFunctions.functions }" :componentVariables="{
+                    variables: componentVariables.variables,
+                    task: task,
+                    index: index
+                }">
                 </TaskTemplate>
             </li>
         </ul>
@@ -24,11 +18,11 @@
 export default {
     name: "TaskListContent",
     props: {
-        functions: {
+        componentFunctions: {
             type: Object,
             required: true
         },
-        variables: {
+        componentVariables: {
             type: Object,
             required: true
         }

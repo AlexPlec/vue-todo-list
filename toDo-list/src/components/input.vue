@@ -3,22 +3,20 @@
 </template>
 
 <script>
-    export default {
-        name:"Input",
-        props: {
-            variables: {
-                type: Object,
-                required: true
-            }
-        },
-        data() {
-            return {
-                text: this.variables.text,
-            }
+export default {
+    name: "Input",
+    props: {
+        variables: {
+            type: Object,
+            required: true
+        }
+    },
+    data() {
+        return {
+            text: this.variables.text,
         }
     }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
