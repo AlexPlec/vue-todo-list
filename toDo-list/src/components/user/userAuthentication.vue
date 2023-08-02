@@ -30,4 +30,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.user-authentication {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+</style>

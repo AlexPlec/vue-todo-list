@@ -1,5 +1,5 @@
 <template>
-    <div class="buttonFilter">
+    <div class="buttons-filter">
         <Button :function="componentFunctions.functions.setFilter" :componentVariables="{
             variables: componentVariables.variables,
             filterValue: 'all'
@@ -31,4 +31,15 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.buttons-filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+.button {
+    width: 100%;
+}
+</style>

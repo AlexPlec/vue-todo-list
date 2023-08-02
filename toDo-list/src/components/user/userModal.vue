@@ -43,4 +43,32 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.userModal {
+    position: fixed;
+    width: 200px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginArea,
+.registerArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.button,.input {
+    margin-bottom: 70px;
+}
+</style>

@@ -26,4 +26,15 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.input, .button {
+  width: 100%;
+}
+.new-task {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+</style>

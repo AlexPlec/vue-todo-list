@@ -27,3 +27,30 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.task {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    background-color: #17B978;
+    border-radius: 10px;
+    /* Add border-radius for rounded corners */
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
+.task-text {
+    display: inline-block;
+    width: 100px;
+    /* Set a fixed width for the task elements */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+</style>

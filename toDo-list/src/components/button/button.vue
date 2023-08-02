@@ -1,5 +1,5 @@
 <template>
-    <button class="btn" @click="this.function(componentVariables)">
+    <button class="button" @click="this.function(componentVariables)">
         <slot></slot>
     </button>
 </template>
