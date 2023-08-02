@@ -1,59 +1,63 @@
 body {
-  background: linear-gradient(#086972, #17B978);
-  margin: 0;
-  height: 100vh;
+    background: linear-gradient(#086972, #17b978);
+    margin: 0;
+    height: 100vh;
 }
 
 .button {
-  border: 1px solid transparent;
-  background-color: white;
-  border-color: rgb(200, 200, 200);
-  border-width: 1px;
-  border-radius: 4px;
-  color: #363636;
-  cursor: pointer;
-  justify-content: center;
-  padding-left: 1em;
-  padding-right: 1em;
-  text-align: center;
-  white-space: nowrap;
-  padding-bottom: calc(0.5em - 1px);
-  padding-left: calc(0.75em - 1px);
-  padding-right: calc(0.75em - 1px);
-  padding-top: calc(0.5em - 1px);
-  position: relative;
-  vertical-align: top;
+    border: 1px solid transparent;
+    background-color: white;
+    border-color: rgb(200, 200, 200);
+    border-width: 1px;
+    border-radius: 4px;
+    color: #363636;
+    cursor: pointer;
+    justify-content: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: center;
+    white-space: nowrap;
+    padding-bottom: calc(0.5em - 1px);
+    padding-left: calc(0.75em - 1px);
+    padding-right: calc(0.75em - 1px);
+    padding-top: calc(0.5em - 1px);
+    position: relative;
+    vertical-align: top;
 }
 .button:hover {
-  border: 1px solid black;
-  background-color: rgb(200, 200, 200);
+    border: 1px solid black;
+    background-color: rgb(200, 200, 200);
+}
+
+.completed {
+    text-decoration: line-through;
 }
 
 .title {
-  padding: 20px;
-  color: #071A52;
-  text-align: center;
-  margin: 0;
+    padding: 20px;
+    color: #071a52;
+    text-align: center;
+    margin: 0;
 }
 
 .content {
-  background-color: #086972;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  height: 100%;
-  padding: 20px;
-  border-radius: 10px;
-  border-style: solid;
-  border-color: black;
-  border-width: 2px;
-  zoom: 200%;
+    background-color: #086972;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    zoom: 200%;
 }
 
 .dashboard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }

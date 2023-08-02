@@ -49,8 +49,4 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-.completed {
-    text-decoration: line-through;
-}
 </style>
