@@ -8,8 +8,8 @@ class User {
 
         axios
             .all([
-                axios.get('http://192.168.0.101:808/api/tasks'),
-                axios.get('http://192.168.0.101:808/api/users'),
+                axios.get('http://localhost:5204/api/tasks'),
+                axios.get('http://localhost:5204/api/users'),
             ])
             .then(
                 axios.spread((tasksResponse, usersResponse) => {
@@ -55,7 +55,7 @@ class User {
         };
 
         axios
-            .post('http://192.168.0.101:808/api/users', userData)
+            .post('http://localhost:5204/api/users', userData)
             .then((response) => {
                 console.log('User created successfully');
                 componentVariables.variables.newUser.login = '';
@@ -65,7 +65,7 @@ class User {
                 // Fetch the user data and update the 'user' object
                 axios
                     .get(
-                        `http://192.168.0.101:808/api/users/${response.data.id}`
+                        `http://localhost:5204/api/users/${response.data.id}`
                     )
                     .then((response) => {
                         componentVariables.variables.user.id = response.data.id;

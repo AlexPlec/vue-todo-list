@@ -27,7 +27,7 @@ class Task {
             ].id;
 
         axios
-            .delete(`http://192.168.0.101:808/api/tasks/${taskId}`)
+            .delete(`http://localhost:5204/api/tasks/${taskId}`)
             .then((response) => {
                 console.log('Task removed successfully');
             })
@@ -63,7 +63,7 @@ class Task {
 
                 axios
                     .put(
-                        `http://192.168.0.101:808/api/tasks/${taskId}`,
+                        `http://localhost:5204/api/tasks/${taskId}`,
                         updatedTask
                     )
                     .then((response) => {
@@ -103,7 +103,7 @@ class Task {
         };
 
         axios
-            .post('http://192.168.0.101:808/api/tasks', taskData)
+            .post('http://localhost:5204/api/tasks', taskData)
             .then((response) => {
                 console.log('Task sent successfully');
                 componentVariables.variables.tasks.push(response.data);
@@ -118,7 +118,7 @@ class Task {
 
     updateTodoList(tasks) {
         axios
-            .get('http://192.168.0.101:808/api/tasks')
+            .get('http://localhost:5204/api/tasks')
             .then((response) => {
                 tasks.value = response.data;
             })
