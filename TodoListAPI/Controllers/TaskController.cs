@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TodoListAPI.Data;
-using TodoListAPI.Models;
+using TodoListAPI.Models.Task;
+using TodoListAPI.Models.User;
+using System.Security.Claims;
+
 
 namespace TodoListAPI.Controllers
 {
@@ -11,7 +14,7 @@ namespace TodoListAPI.Controllers
     [ApiController]
     public class TasksController : ControllerBase
     {
-          private readonly AppDbContext _dbContext;
+        private readonly AppDbContext _dbContext;
 
         public TasksController(AppDbContext dbContext)
         {
@@ -26,32 +29,24 @@ namespace TodoListAPI.Controllers
         }
 
         [HttpPost]
-public ActionResult<TaskModel> CreateTask(TaskModel task)
-{
+        public ActionResult<TaskModel> CreateTask(TaskModel task)
+        {
+            _dbContext.Tasks.Add(task);
+            _dbContext.SaveChanges();
+            return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, task);
+        }
 
-    _dbContext.Tasks.Add(task);
-    _dbContext.SaveChanges();
-    return CreatedAtAction(nameof(GetTasks), task);
-}
+        [HttpGet("{id}")]
+        public ActionResult<TaskModel> GetTaskById(Guid id)
+        {
+            var task = _dbContext.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
 
-        [HttpDelete("{id}")]
-public IActionResult DeleteTask(string id)
-{
-    if (!Guid.TryParse(id, out Guid taskId))
-    {
-        return BadRequest("Invalid task ID format.");
-    }
-
-    var task = _dbContext.Tasks.FirstOrDefault(t => t.Id == taskId);
-    if (task == null)
-    {
-        return NotFound();
-    }
-
-    _dbContext.Tasks.Remove(task);
-    _dbContext.SaveChanges();
-    return NoContent();
-}
+            return Ok(task);
+        }
 
         [HttpPut("{id}")]
         public IActionResult UpdateTask(Guid id, TaskModel updatedTask)
@@ -63,10 +58,26 @@ public IActionResult DeleteTask(string id)
             }
 
             task.Description = updatedTask.Description;
+            task.Completed = updatedTask.Completed;
             // Update other properties as needed
 
             _dbContext.SaveChanges();
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTask(Guid id)
+        {
+            var task = _dbContext.Tasks.FirstOrDefault(t => t.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            _dbContext.Tasks.Remove(task);
+            _dbContext.SaveChanges();
+            return NoContent();
+        }
     }
+
 }

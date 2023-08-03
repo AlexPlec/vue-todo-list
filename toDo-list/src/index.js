@@ -1,15 +1,21 @@
-// import UImodal from './UI/UIModal.vue'
-// import UIInput from './UI/UIInput.vue'
-// import UIButton from './UI/UIButton.vue'
-// import TaskItem from './Task/TaskItem.vue'
-// import UIScrollbar from './UI/UIScrollbar.vue'
+import TaskTemplate from './components/task/task.vue';
+import TaskModal from './components/task/taskModal.vue';
+import Button from './components/button/button.vue';
+import UserModal from './components/user/userModal.vue';
+import Input from './components/input.vue';
+import ButtonFilter from './components/button/buttonFilter.vue';
+import TaskListContent from './components/task/taskListContent.vue';
+import NewTask from './components/task/newtask.vue';
+import UserAuthentication from './components/user/userAuthentication.vue';
 
-// export default
-
-// [
-//     UImodal,
-//     UIInput,
-//     UIButton,
-//     TaskItem,
-//     UIScrollbar
-// ];
+export default [
+    TaskTemplate,
+    TaskModal,
+    Button,
+    UserModal,
+    Input,
+    ButtonFilter,
+    TaskListContent,
+    NewTask,
+    UserAuthentication
+];

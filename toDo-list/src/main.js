@@ -1,12 +1,12 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-// import components from './components';
+import { createApp } from 'vue';
+import App from './App.vue';
+import components from './index';
 // import router from './router'
 const app = createApp(App);
 
-// components.forEach(component => {
-//     app.component(component.name, component)
-// })
+components.forEach((component) => {
+    app.component(component.name, component);
+});
 
 app
     // .use(router)
