@@ -16,7 +16,7 @@ Simple learning project to get started with Vue.js and ASP.NET Core.
 
 ``` bash
 cd toDo-list
-npm ci
+npm install
 npm run dev
 ```
 
