@@ -43,18 +43,6 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet("login/{login}")]
-    public ActionResult<UserModel> GetUserByLogin(string login)
-    {
-        var user = _dbContext.Users.FirstOrDefault(u => u.Login == login);
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(user);
-    }
-
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(Guid id)
     {

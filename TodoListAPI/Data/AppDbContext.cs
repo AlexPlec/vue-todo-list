@@ -36,7 +36,7 @@ namespace TodoListAPI.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string connectionString = "Server=192.168.0.101;Database=toDoList;Uid=root;Pwd=Ilidan01;";
+                string connectionString = "Server=localhost;Database=toDoList;Uid=root;Pwd=password;";
                 optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 26)));
             }
 
